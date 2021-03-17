@@ -3,12 +3,10 @@ import cv2
 from PIL import ImageGrab
 from pprint import pprint
 Colors = {
-    'DemUpper':[228, 185, 115],
-    'DemLower':[210, 140, 49],
-    'SwingUpper':[193, 107, 167],
-    'SwingLower':[171, 100, 151],
-    'RepUpper':[135, 90, 225],
-    'RepLower':[105, 80, 190],
+    'DemUpper':[240, 185, 125],
+    'DemLower':[210, 120, 49],
+    'RepUpper':[175, 110, 225],
+    'RepLower':[105, 80, 160],
     'UnownedUpper':[240, 240, 255],
     'UnownedLower':[210, 210, 220],
     
@@ -77,14 +75,14 @@ Dem_mask = cv2.inRange(img, Dem_lower_range, Dem_upper_range)
 Rep_upper_range = np.array(Colors['RepUpper'])
 Rep_lower_range = np.array(Colors['RepLower'])
 Rep_mask = cv2.inRange(img, Rep_lower_range, Rep_upper_range)
-Swing_upper_range = np.array(Colors['SwingUpper'])
-Swing_lower_range = np.array(Colors['SwingLower'])
-Swing_mask = cv2.inRange(img, Swing_lower_range, Swing_upper_range)
+# Swing_upper_range = np.array(Colors['SwingUpper'])
+# Swing_lower_range = np.array(Colors['SwingLower'])
+# Swing_mask = cv2.inRange(img, Swing_lower_range, Swing_upper_range)
 Unowned_upper_range = np.array(Colors['UnownedUpper'])
 Unowned_lower_range = np.array(Colors['UnownedLower']) 
 Unowned_mask = cv2.inRange(img, Unowned_lower_range, Unowned_upper_range)
 
-for state in StateDict:
+def checkState(state):
     r = str(img[StateDict[state][0],StateDict[state][1],2])
     g = str(img[StateDict[state][0],StateDict[state][1],1])
     b = str(img[StateDict[state][0],StateDict[state][1],0])
@@ -95,16 +93,15 @@ for state in StateDict:
         print("Democratic State ")
     elif Colors['RepLower'][2] <= int(r) <= Colors['RepUpper'][2] and Colors['RepLower'][1] <= int(g) <= Colors['RepUpper'][1] and Colors['RepLower'][0] <= int(b) <= Colors['RepUpper'][0]:
         print("Republican State ")
-    elif Colors['SwingLower'][2] <= int(r) <= Colors['SwingUpper'][2] and Colors['SwingLower'][1] <= int(g) <= Colors['SwingUpper'][1] and Colors['SwingLower'][0] <= int(b) <= Colors['SwingUpper'][0]:
-        print("Swing State")
     else:
         print("Unowned State")
+
+checkState("FL")
 while(1):
     cv2.imshow('image', img)
     cv2.imshow('Unowned_mask', Unowned_mask)
+    cv2.imshow('Dem_mask', Dem_mask)
+    cv2.imshow('Rep_mask', Rep_mask)
     k = cv2.waitKey(33)
     if k == 27:
         break
-#cv2.imshow('Dem_mask', Dem_mask)
-#cv2.imshow('Rep_mask', Rep_mask)
-#cv2.imshow('Swing_mask', Swing_mask)
