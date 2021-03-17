@@ -3,7 +3,7 @@ import cv2
 from PIL import ImageGrab
 from pprint import pprint
 Colors = {
-    'DemUpper':[228, 180, 115],
+    'DemUpper':[228, 185, 115],
     'DemLower':[210, 140, 49],
     'SwingUpper':[193, 107, 167],
     'SwingLower':[171, 100, 151],
@@ -91,9 +91,14 @@ for state in StateDict:
     # print(int(r))
     # print(Colors['DemLower'][2])
     print(state + " : " + r + ", " + g + ", " + b)
-    if 49 <= int(r) <= 115:
+    if Colors['DemLower'][2] <= int(r) <= Colors['DemUpper'][2] and Colors['DemLower'][1] <= int(g) <= Colors['DemUpper'][1] and Colors['DemLower'][0] <= int(b) <= Colors['DemUpper'][0]:
         print("Democratic State ")
-
+    elif Colors['RepLower'][2] <= int(r) <= Colors['RepUpper'][2] and Colors['RepLower'][1] <= int(g) <= Colors['RepUpper'][1] and Colors['RepLower'][0] <= int(b) <= Colors['RepUpper'][0]:
+        print("Republican State ")
+    elif Colors['SwingLower'][2] <= int(r) <= Colors['SwingUpper'][2] and Colors['SwingLower'][1] <= int(g) <= Colors['SwingUpper'][1] and Colors['SwingLower'][0] <= int(b) <= Colors['SwingUpper'][0]:
+        print("Swing State")
+    else:
+        print("Unowned State")
 while(1):
     cv2.imshow('image', img)
     cv2.imshow('Unowned_mask', Unowned_mask)
