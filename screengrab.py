@@ -91,8 +91,8 @@ for state in StateDict:
     # print(int(r))
     # print(Colors['DemLower'][2])
     print(state + " : " + r + ", " + g + ", " + b)
-    if int(r) > Colors['DemUpper'][2]:
-        print("Non Democratic State ")
+    if 49 <= int(r) <= 115:
+        print("Democratic State ")
 
 while(1):
     cv2.imshow('image', img)
